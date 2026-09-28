@@ -80,6 +80,14 @@ create policy "admins delete leads" on public.leads
 
 create index if not exists leads_created_at_idx on public.leads (created_at desc);
 
+-- ── Table permissions (row-level security above still decides which rows) ──
+grant usage on schema public to anon, authenticated;
+grant select on public.site_content to anon, authenticated;
+grant insert, update on public.site_content to authenticated;
+grant insert on public.leads to anon, authenticated;
+grant select, update, delete on public.leads to authenticated;
+grant select on public.admins to authenticated;
+
 -- ── Image uploads (public bucket; only admins can write) ─────────────────
 insert into storage.buckets (id, name, public)
 values ('site-images', 'site-images', true)
