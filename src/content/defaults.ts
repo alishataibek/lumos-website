@@ -343,6 +343,7 @@ const ru: Copy = {
 }
 
 export const DEFAULT_CONTENT: SiteContent = {
+  version: 2,
   settings: {
     phoneDisplay: '+971 54 410 5105',
     phoneLink: '+971544105105',

@@ -28,11 +28,34 @@ function initialLang(): Lang {
   return 'en'
 }
 
+type Saved = { version?: number; copy?: Record<string, Record<string, Record<string, unknown>>> }
+
+/**
+ * Brings content saved by an older version of the site up to date, so that
+ * rewritten sections show their new text instead of the stale saved copy.
+ * Everything else that was saved (other texts, links, images) is kept.
+ */
+function migrate(saved: Saved): Saved {
+  const from = saved.version ?? 1
+  const copy = saved.copy ?? {}
+  if (from < 2) {
+    // v2: packages rewritten (new plans, prices, wording); founders became two co-CEOs.
+    for (const lang of Object.keys(copy)) {
+      delete copy[lang].packages
+      if (copy[lang].founder) {
+        delete copy[lang].founder.label
+        delete copy[lang].founder.role
+      }
+    }
+  }
+  return { ...saved, copy, version: DEFAULT_CONTENT.version }
+}
+
 export async function fetchContent(): Promise<SiteContent> {
   if (!supabase) return DEFAULT_CONTENT
   const { data, error } = await supabase.from('site_content').select('data').eq('id', CONTENT_ROW_ID).maybeSingle()
   if (error || !data) return DEFAULT_CONTENT
-  return mergeContent(DEFAULT_CONTENT, data.data)
+  return mergeContent(DEFAULT_CONTENT, migrate(structuredClone(data.data) as Saved))
 }
 
 export function ContentProvider({ children }: { children: ReactNode }) {

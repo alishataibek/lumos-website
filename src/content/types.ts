@@ -102,6 +102,8 @@ export interface Settings {
 }
 
 export interface SiteContent {
+  /** Bumped when built-in texts change in a way that must replace older saved copies. */
+  version: number
   settings: Settings
   copy: Record<Lang, Copy>
 }
