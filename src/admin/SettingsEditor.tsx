@@ -68,6 +68,26 @@ export function SettingsEditor({ settings, update }: { settings: Settings; updat
         </div>
       </Card>
 
+      <Card
+        title="Email alerts for new requests"
+        subtitle="Get an email every time someone books a consultation. Free via Web3Forms (250 emails a month)."
+      >
+        <ol className="mb-4 list-decimal space-y-1 pl-5 text-sm text-slate-ink">
+          <li>
+            Open{' '}
+            <a href="https://web3forms.com" target="_blank" rel="noreferrer" className="font-semibold text-navy-800 underline">
+              web3forms.com
+            </a>
+            , enter the email that should receive the alerts, and click <b>Create Access Key</b>.
+          </li>
+          <li>Copy the access key from the email they send you and paste it below.</li>
+          <li>
+            Press <b>Save changes</b>, then send a test request from the website.
+          </li>
+        </ol>
+        {text('notifyKey', 'Web3Forms access key', 'leave empty to turn alerts off')}
+      </Card>
+
       <Card title="Hero display">
         <div className="space-y-4">
           <Toggle

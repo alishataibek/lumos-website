@@ -12,6 +12,31 @@ interface Props {
 
 type Status = 'idle' | 'sending' | 'done' | 'error'
 
+/** Emails the request to the owner via Web3Forms. Best effort: the request is already saved. */
+async function notifyByEmail(key: string, lead: Record<string, string | null>) {
+  if (!key.trim()) return
+  try {
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: key.trim(),
+        subject: `New consultation request: ${lead.name}`,
+        from_name: 'Lumos website',
+        Name: lead.name,
+        Phone: lead.phone,
+        email: lead.email ?? undefined,
+        'Wants to study': lead.interest ?? '—',
+        Package: lead.package ?? '—',
+        Message: lead.message ?? '—',
+        Language: lead.lang,
+      }),
+    })
+  } catch {
+    /* the admin inbox still has the request */
+  }
+}
+
 const field =
   'mt-1.5 w-full rounded-xl border border-navy-800/15 bg-white px-4 py-3 text-[15px] text-navy-800 outline-none transition placeholder:text-navy-800/35 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/30'
 
@@ -67,6 +92,7 @@ export function ConsultModal({ planIndex, onClose }: Props) {
 
     setStatus('sending')
     const { error } = await supabase.from('leads').insert(lead)
+    if (!error) void notifyByEmail(settings.notifyKey, lead)
     setStatus(error ? 'error' : 'done')
   }
 

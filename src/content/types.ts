@@ -93,6 +93,8 @@ export interface Settings {
     founder: string
     application: string
   }
+  /** Web3Forms access key; when set, every consultation request is also emailed. */
+  notifyKey: string
   heroUppercase: boolean
   showHeroDescription: boolean
 }

@@ -20,7 +20,7 @@ const STYLES = [
     btn: 'btn-navy',
   },
   {
-    card: 'bg-gold-500 text-navy-900 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)] lg:-mt-6',
+    card: 'bg-gold-500 text-navy-900 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)]',
     price: 'text-navy-900',
     desc: 'text-navy-900/75',
     rule: 'border-navy-900/15',
@@ -44,7 +44,7 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
           <p className="mx-auto mt-6 max-w-[580px] text-lg leading-relaxed text-white/85 sm:text-xl">{t.packages.subtitle}</p>
         </div>
 
-        <div className="mt-16 grid items-start gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-[30px]">
+        <div className="mt-16 grid items-stretch gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-[30px]">
           {t.packages.plans.map((plan, i) => {
             const s = STYLES[i % STYLES.length]
             const recommended = i === 2
@@ -60,7 +60,7 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
                 <p className={`display mt-4 text-[3.6rem] break-words sm:text-[4.1rem] ${s.price}`}>{plan.price}</p>
                 <p className={`mt-5 leading-relaxed ${s.desc}`}>{plan.description}</p>
                 <hr className={`my-8 ${s.rule}`} />
-                <ul className="space-y-5">
+                <ul className="mb-11 space-y-5">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex gap-4 text-[16.5px]">
                       <Check size={19} className={`mt-0.5 shrink-0 ${s.check}`} strokeWidth={2.2} />
@@ -68,7 +68,7 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
                     </li>
                   ))}
                 </ul>
-                <button type="button" onClick={() => onChoose(i)} className={`${s.btn} mt-11 w-full py-4`}>
+                <button type="button" onClick={() => onChoose(i)} className={`${s.btn} mt-auto w-full py-4`}>
                   {plan.cta}
                 </button>
               </article>
