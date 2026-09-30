@@ -13,7 +13,8 @@ const SECTION_TITLES: Record<keyof Copy, string> = {
   steps: 'How it works (steps)',
   packages: 'Packages & prices',
   about: 'About us',
-  founder: 'Meet the founder',
+  founder: 'Founders — Diana (first card)',
+  cofounder: 'Founders — Marwan, co-CEO (second card)',
   application: 'Application section',
   contact: 'Contact section',
   footer: 'Footer',
@@ -46,7 +47,7 @@ function Node({ path, en, ru, setAt, depth }: { path: Path; en: unknown; ru: unk
   const key = String(path[path.length - 1])
 
   if (typeof en === 'string') {
-    const long = en.length > 60 || String(ru ?? '').length > 60
+    const long = en.length > 60 || String(ru ?? '').length > 60 || key === 'bio' || key === 'quote'
     return (
       <div className="grid gap-2 py-3 md:grid-cols-[180px_1fr_1fr] md:gap-4">
         <p className="pt-2 text-[13px] font-semibold text-navy-800">{humanize(key)}</p>

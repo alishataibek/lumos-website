@@ -15,6 +15,47 @@ function GlobeLines() {
   )
 }
 
+interface Person {
+  photo: string
+  name: string
+  role: string
+  bio: string
+  quote: string
+}
+
+/** One leader card; photo, bio and quote are optional so a new card can start blank. */
+function PersonCard({ photo, name, role, bio, quote }: Person) {
+  return (
+    <article className="flex flex-col overflow-hidden rounded-[32px] bg-navy-800 text-white">
+      <div className="relative aspect-[5/4] bg-navy-700">
+        {photo ? (
+          <img src={photo} alt={name} className="absolute inset-0 h-full w-full object-cover object-[50%_28%]" />
+        ) : (
+          <span className="absolute inset-0 grid place-items-center font-serif text-[9rem] font-medium text-gold-500/70 italic" aria-hidden>
+            {name.trim().charAt(0)}
+          </span>
+        )}
+      </div>
+      <div className="relative flex-1 overflow-hidden px-7 py-10 sm:px-12 sm:py-12">
+        <GlobeLines />
+        <div className="relative">
+          <h3 className="font-serif text-5xl font-medium italic sm:text-[3.6rem]">{name}</h3>
+          {role && <p className="mt-4 text-lg font-medium text-gold-400">{role}</p>}
+          {bio && <p className="mt-6 text-lg leading-[1.7] text-white/90">{bio}</p>}
+          {quote && (
+            <blockquote className="mt-8 flex gap-5">
+              <span className="font-serif text-7xl leading-[0.8] text-gold-500" aria-hidden>
+                &ldquo;
+              </span>
+              <p className="font-serif text-2xl leading-snug italic sm:text-[1.7rem]">{quote}</p>
+            </blockquote>
+          )}
+        </div>
+      </div>
+    </article>
+  )
+}
+
 export function About() {
   const { t, settings } = useContent()
   return (
@@ -41,28 +82,11 @@ export function About() {
           </div>
         </div>
 
-        <div className="mt-24 grid overflow-hidden rounded-[32px] bg-navy-800 lg:mt-32 lg:grid-cols-[minmax(0,540px)_1fr]">
-          <div className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[790px]">
-            <img
-              src={settings.images.founder}
-              alt={t.founder.name}
-              className="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
-            />
-          </div>
-          <div className="relative overflow-hidden px-7 py-14 text-white sm:px-14 lg:px-16 lg:py-24 xl:px-24">
-            <GlobeLines />
-            <div className="relative lg:pt-8">
-              <p className="text-[15px] font-medium text-gold-400">{t.founder.label}</p>
-              <h3 className="mt-6 font-serif text-5xl font-medium italic sm:text-[4.1rem]">{t.founder.name}</h3>
-              <p className="mt-5 text-lg font-medium text-gold-400">{t.founder.role}</p>
-              <p className="mt-6 text-lg leading-[1.7] text-white/90">{t.founder.bio}</p>
-              <blockquote className="mt-10 flex gap-5">
-                <span className="font-serif text-7xl leading-[0.8] text-gold-500" aria-hidden>
-                  &ldquo;
-                </span>
-                <p className="font-serif text-2xl leading-snug italic sm:text-[1.9rem]">{t.founder.quote}</p>
-              </blockquote>
-            </div>
+        <div className="mt-24 lg:mt-32">
+          <p className="eyebrow">{t.founder.label}</p>
+          <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-2">
+            <PersonCard photo={settings.images.founder} {...t.founder} />
+            <PersonCard photo={settings.images.cofounder} {...t.cofounder} />
           </div>
         </div>
       </div>

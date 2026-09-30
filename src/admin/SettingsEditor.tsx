@@ -9,7 +9,8 @@ type Update = (patch: Partial<Settings>) => void
 const IMAGE_LABELS: Record<keyof Settings['images'], string> = {
   logo: 'Logo',
   hero: 'Hero background (graduation photo)',
-  founder: 'Founder photo',
+  founder: 'Diana photo',
+  cofounder: 'Marwan photo (co-CEO)',
   application: 'Application section background (campus)',
 }
 

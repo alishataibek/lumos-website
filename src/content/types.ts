@@ -47,6 +47,7 @@ export interface Copy {
   }
   about: { label: string; title: string; text: string; highlights: string[] }
   founder: { label: string; name: string; role: string; bio: string; quote: string }
+  cofounder: { name: string; role: string; bio: string; quote: string }
   application: { label: string; title: string; text: string; cta: string; note: string }
   contact: {
     label: string
@@ -91,6 +92,7 @@ export interface Settings {
     logo: string
     hero: string
     founder: string
+    cofounder: string
     application: string
   }
   /** Web3Forms access key; when set, every consultation request is also emailed. */

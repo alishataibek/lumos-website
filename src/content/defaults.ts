@@ -120,12 +120,18 @@ const en: Copy = {
     highlights: ['One advisor, start to finish', 'Insider knowledge of CUD', 'Students from around the world'],
   },
   founder: {
-    label: 'Meet the founder',
+    label: 'Meet the founders',
     name: 'Diana Ospanova',
-    role: 'Founder and CEO · Canadian University Dubai graduate',
+    role: 'Founder and Co-CEO · Canadian University Dubai graduate',
     bio: "Diana came to Dubai as an international student and did everything on her own: choosing a program, gathering documents, getting a visa and finding a place to live. She built Lumos to be the guide she wished she'd had.",
     quote:
       'I would have been the happiest student if a company like this had existed when I was at university. So I built it.',
+  },
+  cofounder: {
+    name: 'Marwan',
+    role: 'Co-CEO',
+    bio: '',
+    quote: '',
   },
   application: {
     label: 'Application',
@@ -285,12 +291,18 @@ const ru: Copy = {
     highlights: ['Один консультант от начала до конца', 'Знаем CUD изнутри', 'Студенты со всего мира'],
   },
   founder: {
-    label: 'Основатель',
+    label: 'Основатели',
     name: 'Диана Оспанова',
-    role: 'Основатель и CEO · выпускница Canadian University Dubai',
+    role: 'Основатель и со-CEO · выпускница Canadian University Dubai',
     bio: 'Диана приехала в Дубай иностранной студенткой и всё делала сама: выбирала программу, собирала документы, оформляла визу и искала жильё. Она создала Lumos, чтобы стать тем проводником, которого ей когда-то не хватало.',
     quote:
       'Я была бы самой счастливой студенткой, если бы такая компания существовала, когда я училась в университете. Поэтому я её создала.',
+  },
+  cofounder: {
+    name: 'Марван',
+    role: 'Со-CEO',
+    bio: '',
+    quote: '',
   },
   application: {
     label: 'Заявка',
@@ -342,6 +354,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       logo: '/images/logo.jpg',
       hero: '/images/hero.jpg',
       founder: '/images/founder.jpg',
+      cofounder: '',
       application: '/images/application.jpg',
     },
     notifyKey: '',
