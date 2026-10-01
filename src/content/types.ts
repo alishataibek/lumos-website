@@ -1,6 +1,9 @@
-export type Lang = 'en' | 'ru'
+export type Lang = 'en' | 'ru' | 'ar'
 
-export const LANGS: Lang[] = ['en', 'ru']
+export const LANGS: Lang[] = ['en', 'ru', 'ar']
+
+/** Languages written right to left. */
+export const RTL_LANGS: Lang[] = ['ar']
 
 export interface TitledText {
   title: string

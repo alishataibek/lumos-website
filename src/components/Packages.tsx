@@ -53,7 +53,7 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
             return (
               <article key={i} className={`relative flex flex-col rounded-[28px] p-8 sm:p-11 ${s.card}`}>
                 {recommended && (
-                  <span className="absolute -top-4 left-8 inline-flex items-center gap-2 rounded-full bg-navy-800 px-4 py-1.5 text-sm font-semibold text-gold-400">
+                  <span className="absolute -top-4 start-8 inline-flex items-center gap-2 rounded-full bg-navy-800 px-4 py-1.5 text-sm font-semibold text-gold-400">
                     <Sparkle size={11} />
                     {t.packages.recommended}
                   </span>

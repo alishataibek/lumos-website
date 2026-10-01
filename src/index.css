@@ -2,8 +2,9 @@
 
 @theme {
   /* Figtree has no Cyrillic, so Russian text falls through to Onest. */
-  --font-sans: "Figtree", "Onest", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", Georgia, serif;
+  /* Figtree/Cormorant have no Cyrillic or Arabic: those glyphs fall through to Onest, Amiri and IBM Plex Sans Arabic. */
+  --font-sans: "Figtree", "Onest", "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", "Amiri", Georgia, serif;
 
   --color-navy-950: #090e22;
   --color-navy-900: #0c1535;
@@ -55,6 +56,17 @@ body {
 }
 @utility btn-outline-dark {
   @apply btn border-[1.5px] border-navy-800 text-navy-800 hover:bg-navy-800/5;
+}
+
+/* Arabic: joined letters break with letter-spacing, italics don't exist, and the script needs taller lines. */
+[dir="rtl"] body * {
+  letter-spacing: 0 !important;
+}
+[dir="rtl"] .italic {
+  font-style: normal;
+}
+[dir="rtl"] .display {
+  line-height: 1.3;
 }
 
 @media (prefers-reduced-motion: reduce) {

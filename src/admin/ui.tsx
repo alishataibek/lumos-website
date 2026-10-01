@@ -30,11 +30,23 @@ export function Field({ label, hint, children }: { label: string; hint?: string;
   )
 }
 
-export function TextInput({ value, onChange, multiline, className = '' }: { value: string; onChange: (v: string) => void; multiline?: boolean; className?: string }) {
+export function TextInput({
+  value,
+  onChange,
+  multiline,
+  className = '',
+  dir,
+}: {
+  value: string
+  onChange: (v: string) => void
+  multiline?: boolean
+  className?: string
+  dir?: 'ltr' | 'rtl'
+}) {
   return multiline ? (
-    <textarea value={value} onChange={(e) => onChange(e.target.value)} rows={3} className={`${input} resize-y ${className}`} />
+    <textarea dir={dir} value={value} onChange={(e) => onChange(e.target.value)} rows={3} className={`${input} resize-y ${className}`} />
   ) : (
-    <input value={value} onChange={(e) => onChange(e.target.value)} className={`${input} ${className}`} />
+    <input dir={dir} value={value} onChange={(e) => onChange(e.target.value)} className={`${input} ${className}`} />
   )
 }
 

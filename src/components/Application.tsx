@@ -25,7 +25,7 @@ export function Application() {
         <p className="mx-auto mt-8 max-w-[640px] text-lg leading-relaxed text-white/90 sm:text-xl">{t.application.text}</p>
         <a href={settings.applicationUrl} target="_blank" rel="noreferrer" className="btn-gold mt-10 px-11 py-5 text-lg">
           {t.application.cta}
-          <ArrowUpRight size={19} />
+          <ArrowUpRight size={19} className="rtl:-scale-x-100" />
         </a>
         <p className="mt-6 text-sm text-white/75">{t.application.note}</p>
       </div>

@@ -15,7 +15,7 @@ export function Contact() {
             href={phoneLink(settings)}
             className="mt-10 inline-block border-b-2 border-gold-500 pb-1 font-serif text-4xl font-semibold text-navy-800 hover:text-gold-600 sm:text-5xl"
           >
-            {settings.phoneDisplay}
+            <bdi dir="ltr">{settings.phoneDisplay}</bdi>
           </a>
           <div className="mt-9 flex flex-wrap gap-4">
             <a href={whatsappLink(settings)} target="_blank" rel="noreferrer" className="btn-gold">

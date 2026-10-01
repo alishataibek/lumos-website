@@ -54,7 +54,7 @@ create table if not exists public.leads (
   interest text check (interest is null or char_length(interest) <= 200),
   package text check (package is null or char_length(package) <= 120),
   message text check (message is null or char_length(message) <= 2000),
-  lang text check (lang is null or lang in ('en', 'ru')),
+  lang text check (lang is null or lang in ('en', 'ru', 'ar')),
   status text not null default 'new' check (status in ('new', 'contacted', 'applied', 'enrolled', 'closed')),
   notes text
 );

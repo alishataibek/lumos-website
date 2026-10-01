@@ -91,7 +91,9 @@ export function ConsultModal({ planIndex, onClose }: Props) {
     }
 
     setStatus('sending')
-    const { error } = await supabase.from('leads').insert(lead)
+    let { error } = await supabase.from('leads').insert(lead)
+    // Databases set up before Arabic was added only accept 'en'/'ru'; save the request anyway.
+    if (error && lead.lang === 'ar') ({ error } = await supabase.from('leads').insert({ ...lead, lang: null }))
     if (!error) void notifyByEmail(settings.notifyKey, lead)
     setStatus(error ? 'error' : 'done')
   }
@@ -109,7 +111,7 @@ export function ConsultModal({ planIndex, onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label={t.form.close}
-          className="absolute top-5 right-5 grid size-10 place-items-center rounded-full text-navy-800/60 hover:bg-navy-800/5 hover:text-navy-800"
+          className="absolute top-5 end-5 grid size-10 place-items-center rounded-full text-navy-800/60 hover:bg-navy-800/5 hover:text-navy-800"
         >
           <X size={20} />
         </button>
@@ -125,7 +127,7 @@ export function ConsultModal({ planIndex, onClose }: Props) {
           </div>
         ) : (
           <>
-            <h2 id="consult-title" className="display pr-10 text-4xl sm:text-[2.6rem]">
+            <h2 id="consult-title" className="display pe-10 text-4xl sm:text-[2.6rem]">
               {t.form.title}
             </h2>
             <p className="mt-3 text-slate-ink">{t.form.subtitle}</p>

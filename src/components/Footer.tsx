@@ -42,12 +42,12 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-navy-600 pt-10 text-center text-[15px] text-white/80 lg:flex-row lg:justify-between lg:text-left">
+        <div className="mt-12 flex flex-col gap-3 border-t border-navy-600 pt-10 text-center text-[15px] text-white/80 lg:flex-row lg:justify-between lg:text-start">
           <p>
             © {YEAR} {t.footer.rights}
           </p>
           <p>
-            {t.contact.addressLine1} · {settings.phoneDisplay}
+            {t.contact.addressLine1} · <bdi dir="ltr">{settings.phoneDisplay}</bdi>
           </p>
         </div>
       </div>

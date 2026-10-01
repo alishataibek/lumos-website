@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { CONTENT_ROW_ID, supabase } from '../lib/supabase'
 import { mergeContent } from '../lib/merge'
 import { DEFAULT_CONTENT } from './defaults'
-import { LANGS, type Copy, type Lang, type Settings, type SiteContent } from './types'
+import { LANGS, RTL_LANGS, type Copy, type Lang, type Settings, type SiteContent } from './types'
 
 interface ContentState {
   content: SiteContent
@@ -88,6 +88,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = lang
+    document.documentElement.dir = RTL_LANGS.includes(lang) ? 'rtl' : 'ltr'
     document.title = t.meta.title
     document.querySelector('meta[name="description"]')?.setAttribute('content', t.meta.description)
   }, [lang, t])

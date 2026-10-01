@@ -3,7 +3,7 @@ import { ExternalLink, Inbox, Languages, LoaderCircle, LogOut, Save, Settings as
 import { useCallback, useEffect, useState } from 'react'
 import { fetchContent, useContent } from '../content/ContentContext'
 import { DEFAULT_CONTENT } from '../content/defaults'
-import type { Lang, SiteContent } from '../content/types'
+import { LANGS, type Lang, type SiteContent } from '../content/types'
 import { CONTENT_ROW_ID, supabase } from '../lib/supabase'
 import { Leads } from './Leads'
 import { Login } from './Login'
@@ -88,7 +88,7 @@ export default function Admin() {
       if (lang !== 'both') return { ...d, copy: { ...d.copy, [lang]: setIn(d.copy[lang], path, value) } } as SiteContent
       // List edits (add/remove a line) apply to both languages so they stay in step.
       const next = { ...d.copy }
-      for (const l of ['en', 'ru'] as const) {
+      for (const l of LANGS) {
         const list = [...((getIn(next[l], path) as string[]) ?? [])]
         if (value === 'append') list.push('')
         else list.splice(value as number, 1)
@@ -145,7 +145,7 @@ export default function Admin() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#f4f5f9]">
+    <div dir="ltr" className="min-h-screen bg-[#f4f5f9]">
       <header className="sticky top-0 z-30 border-b border-navy-800/10 bg-white">
         <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-4 sm:px-6">
           <div className="flex items-center gap-3">

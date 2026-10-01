@@ -9,12 +9,12 @@ export function Hero({ onBook }: { onBook: () => void }) {
   return (
     <section id="home" className="relative isolate overflow-hidden bg-navy-800 text-white">
       <div
-        className="absolute inset-y-0 right-0 -z-10 w-full bg-cover bg-center lg:w-[72%]"
+        className="absolute inset-y-0 end-0 -z-10 w-full bg-cover bg-center lg:w-[72%]"
         style={{ backgroundImage: `url(${settings.images.hero})` }}
         aria-hidden
       />
       <div
-        className="absolute inset-0 -z-10 bg-navy-800/80 lg:bg-transparent lg:bg-[linear-gradient(90deg,var(--color-navy-800)_28%,rgba(19,32,79,0.82)_48%,rgba(19,32,79,0.25)_100%)]"
+        className="absolute inset-0 -z-10 bg-navy-800/80 lg:bg-transparent lg:bg-[linear-gradient(90deg,var(--color-navy-800)_28%,rgba(19,32,79,0.82)_48%,rgba(19,32,79,0.25)_100%)] rtl:lg:bg-[linear-gradient(270deg,var(--color-navy-800)_28%,rgba(19,32,79,0.82)_48%,rgba(19,32,79,0.25)_100%)]"
         aria-hidden
       />
       <div className="container-x pt-20 pb-40 sm:pt-28 lg:pt-[140px] lg:pb-[200px]">
@@ -40,7 +40,7 @@ export function Hero({ onBook }: { onBook: () => void }) {
 
         <button type="button" onClick={onBook} className="btn-gold mt-10 px-9 py-4 text-base sm:text-[17px]">
           {t.hero.cta}
-          <ArrowRight size={18} />
+          <ArrowRight size={18} className="rtl:-scale-x-100" />
         </button>
       </div>
     </section>
@@ -54,7 +54,7 @@ export function WhyLumos() {
   return (
     <div className="container-x relative z-10 -mt-24 lg:-mt-[100px]">
       <div className="relative rounded-2xl border-t-[3px] border-gold-500 bg-white shadow-[0_30px_60px_-25px_rgba(12,21,53,0.35)]">
-        <span className="absolute -top-4 left-6 inline-flex items-center gap-2 rounded-full bg-navy-800 px-4 py-1.5 text-sm font-semibold text-gold-400 sm:left-10">
+        <span className="absolute -top-4 start-6 inline-flex items-center gap-2 rounded-full bg-navy-800 px-4 py-1.5 text-sm font-semibold text-gold-400 sm:start-10">
           <Sparkle size={11} />
           {t.why.label}
         </span>

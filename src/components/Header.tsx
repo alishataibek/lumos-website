@@ -38,7 +38,7 @@ export function TopBar() {
         <div className="flex w-full items-center justify-between gap-3 md:w-auto md:justify-end md:gap-4">
           <a href={phoneLink(settings)} className="flex items-center gap-2 whitespace-nowrap text-white/90 hover:text-white">
             <Phone size={15} className="text-gold-500" />
-            {settings.phoneDisplay}
+            <bdi dir="ltr">{settings.phoneDisplay}</bdi>
           </a>
           <div className="flex items-center gap-2">
             <a
