@@ -67,8 +67,8 @@ const en: Copy = {
   },
   packages: {
     label: 'Lumos Global Education',
-    title: 'Need help?',
-    subtitle: 'Start here.',
+    title: 'Need help? Start here.',
+    subtitle: '',
     recommended: 'Recommended',
     plans: [
       {
@@ -238,8 +238,8 @@ const ru: Copy = {
   },
   packages: {
     label: 'Lumos Global Education',
-    title: 'Нужна помощь?',
-    subtitle: 'Начните здесь.',
+    title: 'Нужна помощь? Начните здесь.',
+    subtitle: '',
     recommended: 'Рекомендуем',
     plans: [
       {
@@ -343,7 +343,7 @@ const ru: Copy = {
 }
 
 export const DEFAULT_CONTENT: SiteContent = {
-  version: 2,
+  version: 3,
   settings: {
     phoneDisplay: '+971 54 410 5105',
     phoneLink: '+971544105105',

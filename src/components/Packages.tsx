@@ -40,8 +40,10 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
       <div className="container-x">
         <div className="mx-auto max-w-[760px] text-center">
           <p className="text-[15px] font-medium text-gold-500">{t.packages.label}</p>
-          <h2 className="display mt-4 text-5xl sm:text-6xl lg:text-[4.4rem]">{t.packages.title}</h2>
-          <p className="mx-auto mt-6 max-w-[580px] text-lg leading-relaxed text-white/85 sm:text-xl">{t.packages.subtitle}</p>
+          <h2 className="display mt-4 text-5xl text-balance sm:text-6xl lg:text-[4.4rem]">{t.packages.title}</h2>
+          {t.packages.subtitle && (
+            <p className="mx-auto mt-6 max-w-[580px] text-lg leading-relaxed text-white/85 sm:text-xl">{t.packages.subtitle}</p>
+          )}
         </div>
 
         <div className="mt-16 grid items-stretch gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-[30px]">

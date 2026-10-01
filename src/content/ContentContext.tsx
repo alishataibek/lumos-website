@@ -48,6 +48,13 @@ function migrate(saved: Saved): Saved {
       }
     }
   }
+  if (from < 3) {
+    // v3: packages heading became one line ("Need help? Start here.") with no subtitle.
+    for (const lang of Object.keys(copy)) {
+      delete copy[lang].packages?.title
+      delete copy[lang].packages?.subtitle
+    }
+  }
   return { ...saved, copy, version: DEFAULT_CONTENT.version }
 }
 
