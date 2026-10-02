@@ -3,13 +3,13 @@ import { whatsappLink } from '../lib/links'
 import { useOnceInView } from '../lib/useOnceInView'
 import { InstagramIcon, WhatsAppIcon } from './BrandIcons'
 import { SECTION_IDS } from './Header'
-import { Wand } from './Wand'
+import { Broom } from './Broom'
 
 const YEAR = new Date().getFullYear()
 
 export function Footer() {
   const { t, settings } = useContent()
-  // Once per visit: a wand flies across the footer and the logo spins as it passes.
+  // Once per visit: a broomstick flies across the footer and the logo spins as it passes.
   const [ref, phase] = useOnceInView<HTMLDivElement>('lumos-footer-cast', 0.6)
   const playing = phase === 'playing'
   return (
@@ -17,9 +17,9 @@ export function Footer() {
       <div className="container-x py-16">
         <div ref={ref} className="relative flex flex-col items-center gap-10 [perspective:900px] lg:flex-row lg:justify-between">
           {playing && (
-            <span className="animate-wand-fly pointer-events-none absolute top-6 z-10 text-gold-400 lg:top-1/2" aria-hidden>
-              <span className="block rotate-[38deg] rtl:-scale-x-100">
-                <Wand className="size-20" weight={1.6} />
+            <span className="animate-broom-fly pointer-events-none absolute top-6 z-10 text-gold-400 lg:top-1/2" aria-hidden>
+              <span className="block rtl:-scale-x-100">
+                <Broom className="h-12 w-auto drop-shadow-[0_0_6px_rgba(226,198,131,0.45)]" />
               </span>
             </span>
           )}
