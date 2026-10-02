@@ -55,12 +55,21 @@ export function Steps() {
               {t.steps.title}
             </h2>
           </div>
-          <span className="shrink-0 text-gold-500 rtl:-scale-x-100">
+          <span className="hidden shrink-0 text-gold-500 sm:inline rtl:-scale-x-100">
             <Wand cast={phase === 'casting'} className="size-24 sm:size-32 lg:size-40" />
           </span>
         </div>
 
-        <ol className="mt-16 grid gap-12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4 lg:gap-8">
+        <div className="relative mt-16 lg:mt-20">
+        <span
+          className="pointer-events-none absolute start-0 top-3 rotate-[22deg] text-gold-500 sm:hidden rtl:-rotate-[22deg]"
+          aria-hidden
+        >
+          <span className="block rtl:-scale-x-100">
+            <Wand cast={phase === 'casting'} className="size-24" />
+          </span>
+        </span>
+        <ol className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {t.steps.items.map((step, i) => {
             const Icon = ICONS[i % ICONS.length]
             const last = i === t.steps.items.length - 1
@@ -88,6 +97,7 @@ export function Steps() {
             )
           })}
         </ol>
+        </div>
       </div>
     </section>
   )
