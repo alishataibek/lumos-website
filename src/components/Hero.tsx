@@ -1,19 +1,11 @@
 import { Compass, GraduationCap, Send } from 'lucide-react'
-import { useState, type CSSProperties } from 'react'
+import { useState } from 'react'
 import { useContent } from '../content/ContentContext'
 import { Sparkle } from './BrandIcons'
-import { Wand } from './Wand'
+import { StarWand } from './Wand'
 
-// Sparks thrown off the wand tip when the button is pressed: [x, y] travel in px.
-const SPARK_PATHS = [
-  [26, -30],
-  [40, -8],
-  [12, -42],
-  [36, -38],
-  [48, -24],
-  [4, -24],
-]
-const CAST_MS = 700
+// Long enough for the star to finish its spin before the form opens.
+const CAST_MS = 750
 
 export function Hero({ onBook }: { onBook: () => void }) {
   const { t, settings } = useContent()
@@ -65,17 +57,8 @@ export function Hero({ onBook }: { onBook: () => void }) {
 
         <button type="button" onClick={book} className="btn-gold mt-10 px-9 py-4 text-base sm:text-[17px]">
           {t.hero.cta}
-          <span className="relative inline-block size-7 rtl:-scale-x-100">
-            <Wand cast={casting} sparkles={false} weight={2.2} className="size-7" />
-            {casting &&
-              SPARK_PATHS.map(([dx, dy], i) => (
-                <Sparkle
-                  key={i}
-                  size={i % 2 ? 11 : 15}
-                  className="animate-spark-fly absolute -top-1 -right-1 text-gold-300 drop-shadow-[0_0_4px_rgba(255,236,170,0.9)]"
-                  style={{ '--dx': `${dx}px`, '--dy': `${dy}px`, animationDelay: `${0.12 + i * 0.05}s` } as CSSProperties}
-                />
-              ))}
+          <span className="inline-block size-7 rtl:-scale-x-100">
+            <StarWand cast={casting} className="size-7" />
           </span>
         </button>
       </div>

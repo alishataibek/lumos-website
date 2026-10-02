@@ -22,6 +22,12 @@
 
   /* Wand moments: a one-off swish, sparkles popping, steps appearing, sparks flying off the button. */
   --animate-wand-swish: wand-swish 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-star-spin: star-spin 0.8s cubic-bezier(0.3, 0.7, 0.3, 1);
+  @keyframes star-spin {
+    0% { transform: rotate(0deg) scale(1); filter: none; }
+    50% { transform: rotate(200deg) scale(1.7); filter: drop-shadow(0 0 5px #fff6d0); }
+    100% { transform: rotate(360deg) scale(1); filter: none; }
+  }
   --animate-spark-pop: spark-pop 0.6s ease-out both;
   --animate-step-in: step-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-spark-fly: spark-fly 0.65s ease-out forwards;

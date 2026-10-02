@@ -65,3 +65,26 @@ export function Wand({
     </svg>
   )
 }
+
+/**
+ * Slim wand with a five-point star on the tip, used on the "Book a free consultation" button.
+ * `cast` swishes the wand while the star spins and glows. Uses currentColor.
+ */
+export function StarWand({ className = '', cast = false }: { className?: string; cast?: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      fill="currentColor"
+      aria-hidden
+      className={`overflow-visible ${className} ${cast ? 'animate-wand-swish' : ''}`}
+      style={{ transformOrigin: '15% 85%' }}
+    >
+      <path d="M14 90 L68 36 L74 42 L20 96 Z" />
+      <path
+        d="M78 8 L83 22 L98 22 L86 31 L90 45 L78 36 L66 45 L70 31 L58 22 L73 22 Z"
+        className={cast ? 'animate-star-spin' : ''}
+        style={fromCenter}
+      />
+    </svg>
+  )
+}
