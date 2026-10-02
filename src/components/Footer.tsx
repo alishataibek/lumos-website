@@ -1,17 +1,29 @@
 import { useContent } from '../content/ContentContext'
 import { whatsappLink } from '../lib/links'
+import { useOnceInView } from '../lib/useOnceInView'
 import { InstagramIcon, WhatsAppIcon } from './BrandIcons'
 import { SECTION_IDS } from './Header'
+import { Wand } from './Wand'
 
 const YEAR = new Date().getFullYear()
 
 export function Footer() {
   const { t, settings } = useContent()
+  // Once per visit: a wand flies across the footer and the logo spins as it passes.
+  const [ref, phase] = useOnceInView<HTMLDivElement>('lumos-footer-cast', 0.6)
+  const playing = phase === 'playing'
   return (
-    <footer className="border-t-[6px] border-gold-500 bg-navy-900 text-white">
+    <footer className="overflow-hidden border-t-[6px] border-gold-500 bg-navy-900 text-white">
       <div className="container-x py-16">
-        <div className="flex flex-col items-center gap-10 lg:flex-row lg:justify-between">
-          <a href="#home" className="rounded-xl bg-white px-5 py-3">
+        <div ref={ref} className="relative flex flex-col items-center gap-10 [perspective:900px] lg:flex-row lg:justify-between">
+          {playing && (
+            <span className="animate-wand-fly pointer-events-none absolute top-6 z-10 text-gold-400 lg:top-1/2" aria-hidden>
+              <span className="block rotate-[38deg] rtl:-scale-x-100">
+                <Wand className="size-20" weight={1.6} />
+              </span>
+            </span>
+          )}
+          <a href="#home" className={`rounded-xl bg-white px-5 py-3 ${playing ? 'animate-logo-flip' : ''}`}>
             <img src={settings.images.logo} alt="Lumos Global Education" className="h-12 w-auto" />
           </a>
           <nav className="flex flex-wrap justify-center gap-x-9 gap-y-3" aria-label="Footer">

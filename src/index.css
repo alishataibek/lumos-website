@@ -26,6 +26,23 @@
   --animate-step-in: step-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-spark-fly: spark-fly 0.65s ease-out forwards;
 
+  --animate-wand-fly: wand-fly 1.6s cubic-bezier(0.45, 0, 0.3, 1) forwards;
+  --animate-logo-flip: logo-flip 1.3s cubic-bezier(0.3, 0.6, 0.3, 1) 0.15s both;
+
+  /* Footer: the wand crosses from the start edge to the end edge, bobbing as it goes. */
+  @keyframes wand-fly {
+    0% { inset-inline-start: -90px; opacity: 0; transform: translateY(-50%) rotate(-8deg); }
+    12% { opacity: 1; }
+    50% { transform: translateY(-85%) rotate(10deg); }
+    88% { opacity: 1; }
+    100% { inset-inline-start: 100%; opacity: 0; transform: translateY(-50%) rotate(-6deg); }
+  }
+  /* Footer logo spins twice and lands back in place. */
+  @keyframes logo-flip {
+    0% { transform: rotateY(0deg) scale(1); }
+    70% { transform: rotateY(720deg) scale(1.08); }
+    100% { transform: rotateY(720deg) scale(1); }
+  }
   @keyframes wand-swish {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(-22deg); }
