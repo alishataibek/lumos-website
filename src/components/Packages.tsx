@@ -10,6 +10,8 @@ const STYLES = [
     rule: 'border-white/10',
     check: 'text-gold-500',
     btn: 'btn-outline-light',
+    size: 'p-8 sm:p-9',
+    priceSize: 'text-[3.2rem] sm:text-[3.4rem]',
   },
   {
     card: 'bg-white text-navy-800',
@@ -18,6 +20,8 @@ const STYLES = [
     rule: 'border-navy-800/10',
     check: 'text-gold-600',
     btn: 'btn-navy',
+    size: 'p-8 sm:p-11 lg:min-h-[830px] lg:py-12',
+    priceSize: 'text-[3.6rem] sm:text-[3.9rem]',
   },
   {
     card: 'bg-gold-500 text-navy-900 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)]',
@@ -26,6 +30,8 @@ const STYLES = [
     rule: 'border-navy-900/15',
     check: 'text-navy-900',
     btn: 'btn bg-navy-900 text-white hover:bg-navy-800',
+    size: 'p-8 sm:p-12 lg:min-h-[920px] lg:py-16',
+    priceSize: 'text-[3.8rem] sm:text-[4.4rem]',
   },
 ]
 
@@ -46,12 +52,12 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
           )}
         </div>
 
-        <div className="mt-16 grid items-stretch gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-[30px]">
+        <div className="mt-16 grid gap-8 lg:mt-20 lg:grid-cols-[0.86fr_1fr_1.1fr] lg:items-center lg:gap-[26px]">
           {t.packages.plans.map((plan, i) => {
             const s = STYLES[i % STYLES.length]
             const recommended = i === 2
             return (
-              <article key={i} className={`relative flex flex-col rounded-[28px] p-8 sm:p-11 ${s.card}`}>
+              <article key={i} className={`relative flex flex-col justify-center rounded-[28px] ${s.size} ${s.card}`}>
                 {recommended && (
                   <span className="absolute -top-4 start-8 inline-flex items-center gap-2 rounded-full bg-navy-800 px-4 py-1.5 text-sm font-semibold text-gold-400">
                     <Sparkle size={11} />
@@ -59,10 +65,10 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
                   </span>
                 )}
                 <h3 className="text-xl font-bold">{plan.name}</h3>
-                <p className={`display mt-4 text-[3.6rem] break-words sm:text-[4.1rem] ${s.price}`}>{plan.price}</p>
+                <p className={`display mt-4 break-words ${s.priceSize} ${s.price}`}>{plan.price}</p>
                 <p className={`mt-5 leading-relaxed ${s.desc}`}>{plan.description}</p>
                 <hr className={`my-8 ${s.rule}`} />
-                <ul className="mb-11 space-y-5">
+                <ul className="mb-10 space-y-5">
                   {plan.features.map((f, j) => (
                     <li key={j} className="flex gap-4 text-[16.5px]">
                       <Check size={19} className={`mt-0.5 shrink-0 ${s.check}`} strokeWidth={2.2} />
@@ -70,7 +76,7 @@ export function Packages({ onChoose }: { onChoose: (planIndex: number) => void }
                     </li>
                   ))}
                 </ul>
-                <button type="button" onClick={() => onChoose(i)} className={`${s.btn} mt-auto w-full py-4`}>
+                <button type="button" onClick={() => onChoose(i)} className={`${s.btn} w-full py-4`}>
                   {plan.cta}
                 </button>
               </article>

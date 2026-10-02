@@ -1,9 +1,34 @@
-import { ArrowRight, Compass, GraduationCap, Send } from 'lucide-react'
+import { Compass, GraduationCap, Send } from 'lucide-react'
+import { useState, type CSSProperties } from 'react'
 import { useContent } from '../content/ContentContext'
 import { Sparkle } from './BrandIcons'
+import { Wand } from './Wand'
+
+// Sparks thrown off the wand tip when the button is pressed: [x, y] travel in px.
+const SPARK_PATHS = [
+  [26, -30],
+  [40, -8],
+  [12, -42],
+  [36, -38],
+  [48, -24],
+  [4, -24],
+]
+const CAST_MS = 700
 
 export function Hero({ onBook }: { onBook: () => void }) {
   const { t, settings } = useContent()
+  const [casting, setCasting] = useState(false)
+
+  // A quick flick of the wand, then the consultation form opens.
+  function book() {
+    if (casting) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return onBook()
+    setCasting(true)
+    setTimeout(() => {
+      setCasting(false)
+      onBook()
+    }, CAST_MS)
+  }
   const upper = settings.heroUppercase
 
   return (
@@ -38,9 +63,20 @@ export function Hero({ onBook }: { onBook: () => void }) {
           <p className="mt-8 max-w-[560px] text-[17px] leading-relaxed text-white/85 sm:text-lg">{t.hero.description}</p>
         )}
 
-        <button type="button" onClick={onBook} className="btn-gold mt-10 px-9 py-4 text-base sm:text-[17px]">
+        <button type="button" onClick={book} className="btn-gold mt-10 px-9 py-4 text-base sm:text-[17px]">
           {t.hero.cta}
-          <ArrowRight size={18} className="rtl:-scale-x-100" />
+          <span className="relative inline-block size-7 rtl:-scale-x-100">
+            <Wand cast={casting} sparkles={false} weight={2.2} className="size-7" />
+            {casting &&
+              SPARK_PATHS.map(([dx, dy], i) => (
+                <Sparkle
+                  key={i}
+                  size={i % 2 ? 11 : 15}
+                  className="animate-spark-fly absolute -top-1 -right-1 text-gold-300 drop-shadow-[0_0_4px_rgba(255,236,170,0.9)]"
+                  style={{ '--dx': `${dx}px`, '--dy': `${dy}px`, animationDelay: `${0.12 + i * 0.05}s` } as CSSProperties}
+                />
+              ))}
+          </span>
         </button>
       </div>
     </section>
