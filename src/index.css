@@ -28,6 +28,14 @@
     50% { transform: rotate(200deg) scale(1.7); filter: drop-shadow(0 0 5px #fff6d0); }
     100% { transform: rotate(360deg) scale(1); filter: none; }
   }
+  --animate-glitter: glitter 0.95s ease-out both;
+  /* Glitter: bursts out from the star, then drifts down and fades. */
+  @keyframes glitter {
+    0% { opacity: 0; transform: translate(0, 0) scale(0.3) rotate(0deg); }
+    15% { opacity: 1; }
+    60% { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(1) rotate(120deg); }
+    100% { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + var(--fall))) scale(0.6) rotate(220deg); }
+  }
   --animate-spark-pop: spark-pop 0.6s ease-out both;
   --animate-step-in: step-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   --animate-spark-fly: spark-fly 0.65s ease-out forwards;

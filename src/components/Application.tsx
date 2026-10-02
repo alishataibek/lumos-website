@@ -1,9 +1,24 @@
-import { ArrowUpRight } from 'lucide-react'
+import type { MouseEvent } from 'react'
 import { useContent } from '../content/ContentContext'
 import { Sparkle } from './BrandIcons'
+import { CastWand, useCast } from './CastWand'
 
 export function Application() {
   const { t, settings } = useContent()
+  const [casting, cast] = useCast()
+
+  // Play the wand, then open the application form in a new tab. If the browser blocks the
+  // delayed tab, open it in this tab instead so the click is never lost.
+  function apply(e: MouseEvent<HTMLAnchorElement>) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return // let "open in new tab" shortcuts work as usual
+    e.preventDefault()
+    cast(() => {
+      const tab = window.open(settings.applicationUrl, '_blank')
+      if (tab) tab.opener = null
+      else window.location.href = settings.applicationUrl
+    })
+  }
+
   return (
     <section id="application" className="relative isolate overflow-hidden bg-navy-950 text-white">
       <div
@@ -23,9 +38,9 @@ export function Application() {
         <p className="text-[15px] font-medium text-gold-500">{t.application.label}</p>
         <h2 className="display mx-auto mt-5 max-w-[1040px] text-5xl sm:text-6xl lg:text-[4.9rem]">{t.application.title}</h2>
         <p className="mx-auto mt-8 max-w-[640px] text-lg leading-relaxed text-white/90 sm:text-xl">{t.application.text}</p>
-        <a href={settings.applicationUrl} target="_blank" rel="noreferrer" className="btn-gold mt-10 px-11 py-5 text-lg">
+        <a href={settings.applicationUrl} target="_blank" rel="noreferrer" onClick={apply} className="btn-gold mt-10 px-11 py-5 text-lg">
           {t.application.cta}
-          <ArrowUpRight size={19} className="rtl:-scale-x-100" />
+          <CastWand casting={casting} />
         </a>
         <p className="mt-6 text-sm text-white/75">{t.application.note}</p>
       </div>

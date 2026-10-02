@@ -1,26 +1,13 @@
 import { Compass, GraduationCap, Send } from 'lucide-react'
-import { useState } from 'react'
 import { useContent } from '../content/ContentContext'
 import { Sparkle } from './BrandIcons'
-import { StarWand } from './Wand'
+import { CastWand, useCast } from './CastWand'
 
-// Long enough for the star to finish its spin before the form opens.
-const CAST_MS = 750
 
 export function Hero({ onBook }: { onBook: () => void }) {
   const { t, settings } = useContent()
-  const [casting, setCasting] = useState(false)
-
-  // A quick flick of the wand, then the consultation form opens.
-  function book() {
-    if (casting) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return onBook()
-    setCasting(true)
-    setTimeout(() => {
-      setCasting(false)
-      onBook()
-    }, CAST_MS)
-  }
+  // A flick of the wand and a spray of glitter, then the consultation form opens.
+  const [casting, cast] = useCast()
   const upper = settings.heroUppercase
 
   return (
@@ -55,11 +42,9 @@ export function Hero({ onBook }: { onBook: () => void }) {
           <p className="mt-8 max-w-[560px] text-[17px] leading-relaxed text-white/85 sm:text-lg">{t.hero.description}</p>
         )}
 
-        <button type="button" onClick={book} className="btn-gold mt-10 px-9 py-4 text-base sm:text-[17px]">
+        <button type="button" onClick={() => cast(onBook)} className="btn-gold mt-10 px-9 py-4 text-base sm:text-[17px]">
           {t.hero.cta}
-          <span className="inline-block size-7 rtl:-scale-x-100">
-            <StarWand cast={casting} className="size-7" />
-          </span>
+          <CastWand casting={casting} />
         </button>
       </div>
     </section>
