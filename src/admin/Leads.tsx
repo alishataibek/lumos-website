@@ -1,6 +1,7 @@
 import { Inbox, LoaderCircle, Mail, Phone, RefreshCw, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { WhatsAppIcon } from '../components/BrandIcons'
+import { countryOf } from '../lib/countries'
 import { supabase } from '../lib/supabase'
 import { Card, input } from './ui'
 
@@ -9,6 +10,7 @@ export interface Lead {
   created_at: string
   name: string
   phone: string
+  country?: string | null
   email: string | null
   interest: string | null
   package: string | null
@@ -114,6 +116,14 @@ export function Leads({ onCount }: { onCount: (n: number) => void }) {
                   <p className="font-semibold text-navy-800">{l.name}</p>
                   <span className={`rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${STATUS_STYLE[l.status]}`}>{l.status}</span>
                   {l.lang && <span className="rounded-full bg-navy-800/5 px-2 py-0.5 text-xs font-semibold uppercase text-navy-800/60">{l.lang}</span>}
+                  {(() => {
+                    const c = countryOf(l.country, l.phone)
+                    return c ? (
+                      <span className="rounded-full bg-navy-800/5 px-2 py-0.5 text-xs font-semibold text-navy-800/70">
+                        {c.flag} {c.name}
+                      </span>
+                    ) : null
+                  })()}
                   <span className="text-xs text-slate-ink">{fmt.format(new Date(l.created_at))}</span>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">

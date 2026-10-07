@@ -55,6 +55,7 @@ create table if not exists public.leads (
   package text check (package is null or char_length(package) <= 120),
   message text check (message is null or char_length(message) <= 2000),
   lang text check (lang is null or lang in ('en', 'ru', 'ar')),
+  country text check (country is null or char_length(country) = 2),
   status text not null default 'new' check (status in ('new', 'contacted', 'applied', 'enrolled', 'closed')),
   notes text
 );
@@ -77,6 +78,9 @@ create policy "admins update leads" on public.leads
 drop policy if exists "admins delete leads" on public.leads;
 create policy "admins delete leads" on public.leads
   for delete to authenticated using (public.is_admin());
+
+-- Columns added after the first release (safe to re-run on older databases).
+alter table public.leads add column if not exists country text check (country is null or char_length(country) = 2);
 
 create index if not exists leads_created_at_idx on public.leads (created_at desc);
 

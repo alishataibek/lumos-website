@@ -1,6 +1,7 @@
-import { CheckCircle2, LoaderCircle, X } from 'lucide-react'
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { CheckCircle2, ChevronDown, LoaderCircle, X } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { useContent } from '../content/ContentContext'
+import { countryList, DEFAULT_COUNTRY } from '../lib/countries'
 import { whatsappLink } from '../lib/links'
 import { supabase } from '../lib/supabase'
 import { WhatsAppIcon } from './BrandIcons'
@@ -24,6 +25,7 @@ async function notifyByEmail(key: string, lead: Record<string, string | null>) {
         subject: `New consultation request: ${lead.name}`,
         from_name: 'Lumos website',
         Name: lead.name,
+        Country: lead.countryName ?? '—',
         Phone: lead.phone,
         email: lead.email ?? undefined,
         'Wants to study': lead.interest ?? '—',
@@ -40,11 +42,17 @@ async function notifyByEmail(key: string, lead: Record<string, string | null>) {
 const field =
   'mt-1.5 w-full rounded-xl border border-navy-800/15 bg-white px-4 py-3 text-[15px] text-navy-800 outline-none transition placeholder:text-navy-800/35 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/30'
 
+// The phone box sits beside the country picker, so it takes no top margin of its own.
+const fieldInRow = field.replace('mt-1.5 ', '')
+
 /** Mounted only while open, so every opening starts from a fresh form. */
 export function ConsultModal({ planIndex, onClose }: Props) {
   const { t, settings, content, lang } = useContent()
   const [status, setStatus] = useState<Status>('idle')
   const [plan, setPlan] = useState(planIndex)
+  const countries = useMemo(() => countryList(lang), [lang])
+  const [countryIso, setCountryIso] = useState(DEFAULT_COUNTRY)
+  const country = countries.find((c) => c.iso === countryIso) ?? countries[0]
   const firstInput = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -64,7 +72,9 @@ export function ConsultModal({ planIndex, onClose }: Props) {
     if (fd.get('company')) return // honeypot: bots fill every field
     const lead = {
       name: String(fd.get('name') ?? '').trim(),
-      phone: String(fd.get('phone') ?? '').trim(),
+      // Stored with its country code (e.g. "+971 50 123 4567") so the number is always dialable.
+      phone: `+${country.dial} ${String(fd.get('phone') ?? '').trim().replace(/^\+?0*/, '')}`,
+      country: country.iso,
       email: String(fd.get('email') ?? '').trim() || null,
       interest: String(fd.get('interest') ?? '').trim() || null,
       package: content.copy.en.packages.plans[plan]?.name ?? null,
@@ -77,7 +87,7 @@ export function ConsultModal({ planIndex, onClose }: Props) {
       const text = [
         `${t.form.title}`,
         `${t.form.name}: ${lead.name}`,
-        `${t.form.phone}: ${lead.phone}`,
+        `${t.form.phone}: ${lead.phone} (${country.name})`,
         lead.email && `Email: ${lead.email}`,
         lead.interest && `${t.form.interest} ${lead.interest}`,
         `${t.form.package}: ${t.packages.plans[plan]?.name ?? ''}`,
@@ -92,9 +102,14 @@ export function ConsultModal({ planIndex, onClose }: Props) {
 
     setStatus('sending')
     let { error } = await supabase.from('leads').insert(lead)
-    // Databases set up before Arabic was added only accept 'en'/'ru'; save the request anyway.
-    if (error && lead.lang === 'ar') ({ error } = await supabase.from('leads').insert({ ...lead, lang: null }))
-    if (!error) void notifyByEmail(settings.notifyKey, lead)
+    // Databases set up before the country column or Arabic existed reject those values; save the
+    // request anyway (the phone number still starts with the country code).
+    if (error) {
+      ;({ error } = await supabase
+        .from('leads')
+        .insert({ ...lead, country: undefined, lang: lead.lang === 'ar' ? null : lead.lang }))
+    }
+    if (!error) void notifyByEmail(settings.notifyKey, { ...lead, countryName: country.name })
     setStatus(error ? 'error' : 'done')
   }
 
@@ -138,19 +153,50 @@ export function ConsultModal({ planIndex, onClose }: Props) {
                 {t.form.name}
                 <input ref={firstInput} name="name" required maxLength={120} autoComplete="name" className={field} />
               </label>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block text-sm font-semibold">
+              <div>
+                <label htmlFor="consult-phone" className="block text-sm font-semibold">
                   {t.form.phone}
-                  <input name="phone" type="tel" required maxLength={40} autoComplete="tel" placeholder="+971" className={field} />
                 </label>
-                <label className="block text-sm font-semibold">
-                  {t.form.email}
-                  <input name="email" type="email" maxLength={160} autoComplete="email" className={field} />
-                </label>
+                <div className="mt-1.5 flex gap-2" dir="ltr">
+                  {/* Country code: a compact flag + code, with the full country list on tap. */}
+                  <div className="relative shrink-0 rounded-xl border border-navy-800/15 bg-white transition focus-within:border-gold-500 focus-within:ring-2 focus-within:ring-gold-500/30">
+                    <span className="pointer-events-none flex h-full items-center gap-1.5 ps-3 pe-8 text-[15px] text-navy-800" aria-hidden>
+                      <span className="text-lg leading-none">{country.flag}</span>+{country.dial}
+                    </span>
+                    <ChevronDown size={16} className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 text-navy-800/50" />
+                    <select
+                      value={countryIso}
+                      onChange={(e) => setCountryIso(e.target.value)}
+                      aria-label={t.form.country}
+                      className="absolute inset-0 w-full cursor-pointer opacity-0"
+                    >
+                      {countries.map((c, i) => (
+                        <option key={c.iso + i} value={c.iso}>
+                          {c.flag} {c.name} (+{c.dial})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <input
+                    id="consult-phone"
+                    name="phone"
+                    type="tel"
+                    inputMode="tel"
+                    required
+                    maxLength={24}
+                    autoComplete="tel-national"
+                    placeholder="50 123 4567"
+                    className={fieldInRow}
+                  />
+                </div>
               </div>
               <label className="block text-sm font-semibold">
+                {t.form.email}
+                <input name="email" type="email" required maxLength={160} autoComplete="email" className={field} />
+              </label>
+              <label className="block text-sm font-semibold">
                 {t.form.interest}
-                <input name="interest" maxLength={200} placeholder={t.form.interestPlaceholder} className={field} />
+                <input name="interest" required maxLength={200} placeholder={t.form.interestPlaceholder} className={field} />
               </label>
               <label className="block text-sm font-semibold">
                 {t.form.package}

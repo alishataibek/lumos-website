@@ -62,13 +62,14 @@ export interface Copy {
     mapTitle: string
     directions: string
   }
-  footer: { rights: string }
+  footer: { rights: string; emailLabel: string; hoursLabel: string; hours: string; disclaimer: string }
   form: {
     title: string
     subtitle: string
     name: string
     phone: string
     email: string
+    country: string
     interest: string
     interestPlaceholder: string
     package: string
@@ -86,6 +87,8 @@ export interface Copy {
 /** Non-translatable settings: contacts, links, images and display options. */
 export interface Settings {
   phoneDisplay: string
+  /** Company email shown in the contact section and footer. */
+  email: string
   phoneLink: string
   whatsappNumber: string
   instagramUrl: string

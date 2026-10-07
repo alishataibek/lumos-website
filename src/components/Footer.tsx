@@ -54,12 +54,29 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-navy-600 pt-10 text-center text-[15px] text-white/80 lg:flex-row lg:justify-between lg:text-start">
+        <div className="mt-12 grid gap-6 border-t border-navy-600 pt-10 text-center text-[15px] text-white/80 sm:grid-cols-3 sm:text-start">
           <p>
-            © {YEAR} {t.footer.rights}
+            <span className="block font-semibold text-white">{t.contact.addressLine1}</span>
+            <span className="mt-1 block">{t.contact.addressLine2}</span>
+            <bdi dir="ltr" className="mt-1 block">
+              {settings.phoneDisplay}
+            </bdi>
           </p>
           <p>
-            {t.contact.addressLine1} · <bdi dir="ltr">{settings.phoneDisplay}</bdi>
+            <span className="block font-semibold text-white">{t.footer.emailLabel}</span>
+            <a href={`mailto:${settings.email}`} className="mt-1 block hover:text-gold-400">
+              <bdi dir="ltr">{settings.email}</bdi>
+            </a>
+          </p>
+          <p>
+            <span className="block font-semibold text-white">{t.footer.hoursLabel}</span>
+            <span className="mt-1 block">{t.footer.hours}</span>
+          </p>
+        </div>
+        <div className="mt-10 border-t border-navy-600 pt-8 text-center text-[13px] leading-relaxed text-white/55 sm:text-start">
+          <p className="max-w-[900px]">{t.footer.disclaimer}</p>
+          <p className="mt-4 text-white/70">
+            © {YEAR} {t.footer.rights}
           </p>
         </div>
       </div>

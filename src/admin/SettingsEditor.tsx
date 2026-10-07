@@ -61,6 +61,7 @@ export function SettingsEditor({ settings, update }: { settings: Settings; updat
       <Card title="Contacts & links">
         <div className="grid gap-4 sm:grid-cols-2">
           {text('phoneDisplay', 'Phone (as shown)', 'e.g. +971 54 410 5105')}
+          {text('email', 'Company email', 'shown in Contact and the footer')}
           {text('phoneLink', 'Phone (for calling)', 'digits only, e.g. +971544105105')}
           {text('whatsappNumber', 'WhatsApp number', 'digits only, e.g. 971544105105')}
           {text('instagramUrl', 'Instagram link')}

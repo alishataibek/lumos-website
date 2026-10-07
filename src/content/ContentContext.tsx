@@ -55,6 +55,14 @@ function migrate(saved: Saved): Saved {
       delete copy[lang].packages?.subtitle
     }
   }
+  if (from < 4) {
+    // v4: step 4 no longer mentions visas; email became a required form field (label changed).
+    for (const lang of Object.keys(copy)) {
+      const items = (copy[lang].steps as { items?: Record<string, unknown>[] } | undefined)?.items
+      if (items?.[3]) delete items[3].text
+      delete copy[lang].form?.email
+    }
+  }
   return { ...saved, copy, version: DEFAULT_CONTENT.version }
 }
 

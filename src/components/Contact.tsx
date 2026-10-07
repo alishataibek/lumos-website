@@ -1,4 +1,4 @@
-import { MapPin } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
 import { useContent } from '../content/ContentContext'
 import { directionsLink, mapEmbedLink, phoneLink, whatsappLink } from '../lib/links'
 import { InstagramIcon, WhatsAppIcon } from './BrandIcons'
@@ -34,6 +34,12 @@ export function Contact() {
               <span className="block font-semibold text-navy-800">{t.contact.addressLine1}</span>
               <span className="mt-1 block text-slate-ink">{t.contact.addressLine2}</span>
             </p>
+          </div>
+          <div className="mt-5 flex items-center gap-4">
+            <Mail size={24} className="shrink-0 text-gold-600" />
+            <a href={`mailto:${settings.email}`} className="text-lg font-semibold text-navy-800 hover:text-gold-600">
+              <bdi dir="ltr">{settings.email}</bdi>
+            </a>
           </div>
         </div>
 

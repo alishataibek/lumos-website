@@ -61,7 +61,7 @@ const en: Copy = {
       },
       {
         title: 'Get ready for Dubai',
-        text: "From your visa to your arrival, we'll help you prepare for student life.",
+        text: "We'll help you prepare for your move and support you after you arrive, so you can settle into student life with confidence.",
       },
     ],
   },
@@ -150,13 +150,21 @@ const en: Copy = {
     mapTitle: 'Lumos Global Education',
     directions: 'Get directions',
   },
-  footer: { rights: 'Lumos Global Education. Dubai, U.A.E.' },
+  footer: {
+    rights: 'Lumos Global Education. Dubai, U.A.E.',
+    emailLabel: 'Email',
+    hoursLabel: 'Business hours',
+    hours: 'Monday – Friday, 9:00 – 18:00 (UAE time)',
+    disclaimer:
+      'Disclaimer: Information on this website is provided for general guidance and may change without notice. Lumos Global Education does not guarantee admission, scholarships, visa approval, employment or any particular outcome. Final decisions are made by the relevant educational institutions and government authorities.',
+  },
   form: {
     title: 'Book a free consultation',
     subtitle: "Leave your details and we'll get back to you within one working day.",
     name: 'Full name',
     phone: 'Phone / WhatsApp',
-    email: 'Email (optional)',
+    email: 'Email',
+    country: 'Country code',
     interest: 'What would you like to study?',
     interestPlaceholder: 'e.g. Business, Computer Science…',
     package: 'Package',
@@ -232,7 +240,7 @@ const ru: Copy = {
       },
       {
         title: 'Готовьтесь к Дубаю',
-        text: 'От визы до приезда — поможем подготовиться к студенческой жизни.',
+        text: 'Поможем подготовиться к переезду и поддержим после приезда, чтобы вы уверенно начали студенческую жизнь.',
       },
     ],
   },
@@ -321,13 +329,21 @@ const ru: Copy = {
     mapTitle: 'Lumos Global Education',
     directions: 'Построить маршрут',
   },
-  footer: { rights: 'Lumos Global Education. Дубай, ОАЭ.' },
+  footer: {
+    rights: 'Lumos Global Education. Дубай, ОАЭ.',
+    emailLabel: 'Email',
+    hoursLabel: 'Часы работы',
+    hours: 'Понедельник – пятница, 9:00 – 18:00 (время ОАЭ)',
+    disclaimer:
+      'Отказ от ответственности: информация на этом сайте носит общий справочный характер и может быть изменена без предупреждения. Lumos Global Education не гарантирует поступление, получение стипендий, одобрение визы, трудоустройство или иной конкретный результат. Окончательные решения принимают соответствующие учебные заведения и государственные органы.',
+  },
   form: {
     title: 'Бесплатная консультация',
     subtitle: 'Оставьте свои данные, и мы свяжемся с вами в течение одного рабочего дня.',
     name: 'Имя и фамилия',
     phone: 'Телефон / WhatsApp',
-    email: 'Email (необязательно)',
+    email: 'Email',
+    country: 'Код страны',
     interest: 'Что вы хотите изучать?',
     interestPlaceholder: 'Например, бизнес, информатика…',
     package: 'Пакет',
@@ -403,7 +419,7 @@ const ar: Copy = {
       },
       {
         title: 'استعد لدبي',
-        text: 'من التأشيرة حتى وصولك، سنساعدك على الاستعداد للحياة الطلابية.',
+        text: 'سنساعدك على الاستعداد للانتقال وندعمك بعد وصولك، لتبدأ حياتك الطلابية بثقة.',
       },
     ],
   },
@@ -491,13 +507,21 @@ const ar: Copy = {
     mapTitle: 'لوموس للتعليم العالمي',
     directions: 'احصل على الاتجاهات',
   },
-  footer: { rights: 'لوموس للتعليم العالمي. دبي، الإمارات العربية المتحدة.' },
+  footer: {
+    rights: 'لوموس للتعليم العالمي. دبي، الإمارات العربية المتحدة.',
+    emailLabel: 'البريد الإلكتروني',
+    hoursLabel: 'ساعات العمل',
+    hours: 'الاثنين – الجمعة، 9:00 – 18:00 (بتوقيت الإمارات)',
+    disclaimer:
+      'إخلاء مسؤولية: المعلومات الواردة في هذا الموقع مقدَّمة للإرشاد العام وقد تتغير دون إشعار مسبق. لا تضمن لوموس للتعليم العالمي القبول أو المنح الدراسية أو الموافقة على التأشيرة أو التوظيف أو أي نتيجة بعينها. تُتخذ القرارات النهائية من قِبل المؤسسات التعليمية والجهات الحكومية المختصة.',
+  },
   form: {
     title: 'احجز استشارة مجانية',
     subtitle: 'اترك بياناتك وسنتواصل معك خلال يوم عمل واحد.',
     name: 'الاسم الكامل',
     phone: 'الهاتف / واتساب',
-    email: 'البريد الإلكتروني (اختياري)',
+    email: 'البريد الإلكتروني',
+    country: 'رمز الدولة',
     interest: 'ماذا تريد أن تدرس؟',
     interestPlaceholder: 'مثلًا: إدارة الأعمال، علوم الحاسوب…',
     package: 'الباقة',
@@ -513,9 +537,10 @@ const ar: Copy = {
 }
 
 export const DEFAULT_CONTENT: SiteContent = {
-  version: 3,
+  version: 4,
   settings: {
     phoneDisplay: '+971 54 410 5105',
+    email: 'info@lumosglobaledu.com',
     phoneLink: '+971544105105',
     whatsappNumber: '971544105105',
     instagramUrl: 'https://www.instagram.com/lumos.global.education/',
