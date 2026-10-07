@@ -554,6 +554,8 @@ export const DEFAULT_CONTENT: SiteContent = {
       application: '/images/application.jpg',
     },
     notifyKey: '',
+    // Diana stands right of centre in her portrait: zoom in around the right edge to centre her.
+    photoFocus: { founder: { x: 100, y: 30, zoom: 1.45 }, cofounder: { x: 50, y: 30, zoom: 1 } },
     heroUppercase: false,
     showHeroDescription: true,
   },

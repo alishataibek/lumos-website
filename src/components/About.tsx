@@ -1,5 +1,6 @@
 import { Globe, GraduationCap, UserRound } from 'lucide-react'
 import { useContent } from '../content/ContentContext'
+import { photoStyle, type PhotoFocus } from '../lib/photoFocus'
 
 const ICONS = [UserRound, GraduationCap, Globe]
 
@@ -17,6 +18,7 @@ function GlobeLines() {
 
 interface Person {
   photo: string
+  focus: PhotoFocus
   name: string
   role: string
   bio: string
@@ -24,12 +26,12 @@ interface Person {
 }
 
 /** One leader card; photo, bio and quote are optional so a new card can start blank. */
-function PersonCard({ photo, name, role, bio, quote }: Person) {
+function PersonCard({ photo, focus, name, role, bio, quote }: Person) {
   return (
     <article className="flex flex-col overflow-hidden rounded-[32px] bg-navy-800 text-white">
-      <div className="relative aspect-[5/4] bg-navy-700">
+      <div className="relative aspect-[5/4] overflow-hidden bg-navy-700">
         {photo ? (
-          <img src={photo} alt={name} className="absolute inset-0 h-full w-full object-cover object-[50%_12%]" />
+          <img src={photo} alt={name} className="absolute inset-0 h-full w-full object-cover" style={photoStyle(focus)} />
         ) : (
           <span className="absolute inset-0 grid place-items-center font-serif text-[9rem] font-medium text-gold-500/70 italic" aria-hidden>
             {name.trim().charAt(0)}
@@ -85,8 +87,8 @@ export function About() {
         <div className="mt-24 lg:mt-32">
           <p className="eyebrow">{t.founder.label}</p>
           <div className="mt-8 grid items-stretch gap-8 lg:grid-cols-2">
-            <PersonCard photo={settings.images.founder} {...t.founder} />
-            <PersonCard photo={settings.images.cofounder} {...t.cofounder} />
+            <PersonCard photo={settings.images.founder} focus={settings.photoFocus.founder} {...t.founder} />
+            <PersonCard photo={settings.images.cofounder} focus={settings.photoFocus.cofounder} {...t.cofounder} />
           </div>
         </div>
       </div>

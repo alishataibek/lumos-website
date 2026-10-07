@@ -1,3 +1,5 @@
+import type { PhotoFocus } from '../lib/photoFocus'
+
 export type Lang = 'en' | 'ru' | 'ar'
 
 export const LANGS: Lang[] = ['en', 'ru', 'ar']
@@ -103,6 +105,8 @@ export interface Settings {
   }
   /** Web3Forms access key; when set, every consultation request is also emailed. */
   notifyKey: string
+  /** Where each leader photo is centred and how far it is zoomed (Admin → Settings & images). */
+  photoFocus: { founder: PhotoFocus; cofounder: PhotoFocus }
   heroUppercase: boolean
   showHeroDescription: boolean
 }

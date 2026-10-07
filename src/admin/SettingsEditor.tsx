@@ -1,6 +1,7 @@
 import { LoaderCircle, Upload } from 'lucide-react'
 import { useState } from 'react'
 import type { Settings } from '../content/types'
+import { CENTERED, photoStyle, type PhotoFocus } from '../lib/photoFocus'
 import { IMAGE_BUCKET, supabase } from '../lib/supabase'
 import { Card, Field, TextInput, Toggle, input } from './ui'
 
@@ -44,6 +45,50 @@ function ImageField({ name, url, onChange }: { name: keyof Settings['images']; u
           <input type="file" accept="image/*" className="hidden" disabled={busy} onChange={(e) => e.target.files?.[0] && void upload(e.target.files[0])} />
         </label>
         {error && <p className="text-xs text-red-600">{error}</p>}
+      </div>
+    </div>
+  )
+}
+
+/** Sliders that place a leader photo in its card, with a preview the same shape as the website card. */
+function FocusField({ label, url, focus, onChange }: { label: string; url: string; focus: PhotoFocus; onChange: (f: PhotoFocus) => void }) {
+  const slider = (key: keyof PhotoFocus, name: string, min: number, max: number, step: number, ends: [string, string]) => (
+    <label className="block">
+      <span className="flex justify-between text-[13px] font-semibold text-navy-800">
+        {name}
+        <span className="font-normal text-slate-ink">{key === 'zoom' ? `${focus.zoom.toFixed(2)}×` : `${focus[key]}%`}</span>
+      </span>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={focus[key]}
+        onChange={(e) => onChange({ ...focus, [key]: Number(e.target.value) })}
+        className="mt-1 w-full accent-[#c9a24c]"
+      />
+      <span className="flex justify-between text-[11px] text-slate-ink">
+        <span>{ends[0]}</span>
+        <span>{ends[1]}</span>
+      </span>
+    </label>
+  )
+  return (
+    <div className="grid gap-5 rounded-xl bg-navy-800/[0.03] p-4 ring-1 ring-navy-800/10 sm:grid-cols-[220px_1fr]">
+      <div className="relative aspect-[5/4] overflow-hidden rounded-xl bg-navy-700">
+        {url && <img src={url} alt="" className="absolute inset-0 h-full w-full object-cover" style={photoStyle(focus)} />}
+      </div>
+      <div className="space-y-3">
+        <p className="text-[13px] font-semibold text-navy-800">{label}</p>
+        <p className="text-xs text-slate-ink">
+          If the person stands to one side, move <b>Focus</b> towards that side and raise <b>Zoom</b> until they sit in the middle.
+        </p>
+        {slider('x', 'Focus: left ↔ right', 0, 100, 1, ['left', 'right'])}
+        {slider('y', 'Focus: top ↕ bottom', 0, 100, 1, ['top', 'bottom'])}
+        {slider('zoom', 'Zoom', 1, 2, 0.05, ['none', '2×'])}
+        <button type="button" onClick={() => onChange(CENTERED)} className="text-xs font-semibold text-navy-800 underline">
+          Reset
+        </button>
       </div>
     </div>
   )
@@ -111,6 +156,20 @@ export function SettingsEditor({ settings, update }: { settings: Settings; updat
         <div className="space-y-6">
           {(Object.keys(IMAGE_LABELS) as (keyof Settings['images'])[]).map((k) => (
             <ImageField key={k} name={k} url={settings.images[k]} onChange={(u) => update({ images: { ...settings.images, [k]: u } })} />
+          ))}
+        </div>
+      </Card>
+
+      <Card title="Founder photos: position" subtitle="Centre each person in their card. The preview matches the card on the website.">
+        <div className="space-y-4">
+          {(['founder', 'cofounder'] as const).map((k) => (
+            <FocusField
+              key={k}
+              label={IMAGE_LABELS[k]}
+              url={settings.images[k]}
+              focus={settings.photoFocus[k]}
+              onChange={(f) => update({ photoFocus: { ...settings.photoFocus, [k]: f } })}
+            />
           ))}
         </div>
       </Card>
